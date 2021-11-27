@@ -6,16 +6,16 @@ const sequelize = require('../config/connection');
 
 const seedAll = async () => {
     await sequelize.sync({ force: true });
-    console.log('Getting all seeds..');
+    console.log('\n----- seedAll Successfull -----\n')
 
     await seedUsers();
-    console.log('Retrieved all users');
+    console.log('\n----- Users seeded -----\n')
 
     await seedPosts();
-    console.log('Retrieved all posts');
+    console.log('\n----- Posts seeded -----\n')
 
     await seedComments();
-    console.log('Retrieved all comments');
+    console.log('\n----- Comments seeded -----\n')
 
     process.exit(0);
 };
