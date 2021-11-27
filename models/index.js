@@ -1,36 +1,28 @@
 const User = require('./User');
-const Comment = require('./Comment');
 const Post = require('./Post');
+const Comment = require('./Comment');
 
-User.hasMany(Post, {
-    foreignKey: 'user_id'
-});
-
-User.hasMany(Comment, {
-    foreignKey: 'user_id',
-    onDelete: 'SET NULL'
-});
-
-//If User is deleted all associated Posts will be deleted
+//If User is deleted so are the Posts
 Post.belongsTo(User, {
     foreignKey: 'user_id',
-    onDelete: 'SET NULL'
+    //CASCADE links the childe to the parent and will delete or update depending on what the parent does
+    onDelete: 'CASCADE'
 });
 
+//If Post is deleted so are the Comments
 Post.hasMany(Comment, {
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    onDelete: 'CASCADE'
 });
 
-//If User is deleted all associated Comments will be deleted
+//If User is deleted so are the Comments
 Comment.belongsTo(User, {
     foreignKey: 'user_id',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
 });
 
-//If a Post is deleted all associated Comments will be deleted
-Comment.belongsTo(Post, {
-    foreignKey: 'post_id',
-    onDelete: 'SET NULL'
-});
-
-module.exports = { User, Post, Comment };
+module.exports = {
+    User,
+    Comment,
+    Post
+};
