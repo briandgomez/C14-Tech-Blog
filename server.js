@@ -15,7 +15,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 //Session requirements
 const sess = {
-    secret: 'secret password',
+    secret: 'secret-password',
     cookie: {},
     resave: false,
     saveUninitialized: true,
@@ -26,7 +26,7 @@ const sess = {
 
 app.use(session(sess));
 
-const helpers = require('./utils/helpers')
+const helpers = require('./utils/helper')
 
 const hbs = exphbs.create({ helpers });
 
@@ -41,5 +41,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./controllers'));
 
 sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log('Now listening'))
+    app.listen(PORT, () => console.log(`Now listening on ${PORT}`))
 });
