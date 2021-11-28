@@ -14,7 +14,6 @@
             <nav>
                 {{#if loggedIn}}
                 <a href="../dashboard.handlebars"></a>
-                <button id="logout" class="btn-no-style">logout</button>
                 {{else}}
                 <a href="../homepage.handlebars"></a>
                 {{/if}}
@@ -26,7 +25,7 @@
     </div>
 
     {{#if loggedIn}}
-    <script src="/javascript/logout.js"></script>
+    <script src="../../public/javascript/logout.js"></script>
     {{/if}}
 </body>
 
