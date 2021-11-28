@@ -6,7 +6,7 @@ const withAuth = require('../utils/auth');
 router.get('/', (req, res) => {
     console.log(req.session);
     Post.findAll({
-        //Hardcoded '1' to test 'Get Specific User Post'
+        //Hardcoded '1' to test localhost:3001/dashboard
         where: {
             user_id: 1
         },
