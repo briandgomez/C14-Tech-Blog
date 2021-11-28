@@ -2,33 +2,14 @@ const router = require('express').Router();
 const { Post, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
-//Gets all posts for dashboard
-router.get('/', withAuth, (req, res) => {
+//Gets all existing posts created by a specific user
+router.get('/', (req, res) => {
     console.log(req.session);
     Post.findAll({
+        //Hardcoded '1' to test 'Get Specific User Post'
         where: {
-            user_id: req.session.user_id
+            user_id: 1
         },
-        attributes: [
-            'id',
-            'title',
-            'content',
-            'created_at'
-        ],
-        include: [
-            {
-                model: Comment,
-                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
-                include: {
-                    model: User,
-                    attributes: ['username']
-                }
-            },
-            {
-                model: User,
-                attributes: ['username']
-            }
-        ]
     })
         .then(dbPostData => {
             const posts = dbPostData.map(post => post.get({ plain: true }));
@@ -46,13 +27,11 @@ router.get('/edit/:id', withAuth, (req, res) => {
         attributes: [
             'id',
             'title',
-            'content',
-            'created_at'
         ],
         include: [
             {
                 model: Comment,
-                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                attributes: ['id','post_id', 'user_id'],
                 include: {
                     model: User,
                     attributes: ['username']

@@ -8,14 +8,12 @@ router.get('/', (req, res) => {
         attributes: [
             'id',
             'title',
-            'content',
-            'created_at',
         ],
         order: [['created_at', 'DESC']],
         include: [
             {
                 model: Comment,
-                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                attributes: ['id','post_id', 'user_id'],
                 include: {
                     model: User,
                     attributes: ['username']
@@ -43,13 +41,11 @@ router.get('/:id', (req, res) => {
         attributes: [
             'id',
             'title',
-            'content',
-            'created_at',
         ],
         include: [
             {
                 model: Comment,
-                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                attributes: ['id','post_id', 'user_id'],
                 include: {
                     model: User,
                     attributes: ['username']
@@ -80,7 +76,7 @@ router.post('/', withAuth, (req, res) => {
     Post.create({
         title: req.body.title,
         user_id: req.session.user_id,
-        content: req.body.content
+        body: req.body.body
     })
         .then(dbPostData => res.json(dbPostData))
         .catch(err => {
@@ -90,10 +86,11 @@ router.post('/', withAuth, (req, res) => {
 });
 
 //Update specific post
-router.put('/:id', withAuth, (req, res) => {
+router.put('/:id', (req, res) => {
     Post.update(
         {
-            comment_text: req.body.comment_text
+            //Left-side(body)= ref. to model, right-side(req.body.text)= request from user
+            body: req.body.text
         },
         {
             where: {

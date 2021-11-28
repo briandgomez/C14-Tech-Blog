@@ -14,28 +14,33 @@ router.get('/', (req, res) => {
         });
 });
 
-//Get specific user information
+//Get specific user post
 router.get('/:id', (req, res) => {
-    User.findOne({
+    Post.findAll({
+        where: {
+            user_id: req.params.id
+        },
+    })
+    /*User.findOne({
         attributes: { exclude: ['password'] },
         where: {
             id: req.params.id
         },
         include: [
             {
-                model: Post,
-                attributes: ['id', 'title', 'content', 'created_at']
+                model: User,
+                attributes: ['title', 'body'],
             },
             {
                 model: Comment,
-                attributes: ['id', 'comment_text', 'created_at'],
+                attributes: ['body'],
                 include: {
                     model: Post,
                     attributes: ['title']
                 }
             }
         ]
-    })
+    })*/
         .then(dbUserData => {
             if (!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id' });
