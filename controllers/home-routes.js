@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const { Post, User, Comment } = require('../models');
 
-//Get all exisitng Posts for homepage
+//Get all posts for homepage
 router.get('/', (req, res) => {
     Post.findAll({
         attributes: [
             'id',
             'title',
+            'body'
         ],
         include: [
             {
@@ -46,6 +47,7 @@ router.get('/post/:id', (req, res) => {
         attributes: [
             'id',
             'title',
+            'body'
         ],
         include: [
             {
